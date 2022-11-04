@@ -1,0 +1,41 @@
+on:
+  schedule:
+    - cron: "0 14 * * 6"
+
+env:
+  REMOTE_OWNER: alacritty
+  REMOTE_REPO: alacritty
+
+name: Remote tag Watcher
+jobs:
+  versions:
+    runs-on: ubuntu-latest
+    outputs:
+      remote_raw: ${{ steps.remote.outputs.raw }}
+      local_raw: ${{ steps.local.outputs.raw }}
+      remote_clean: ${{ steps.remote.outputs.clean_no_release }}
+      local_clean: ${{ steps.local.outputs.clean_no_release }}
+    steps:
+      - uses: actions/checkout@v3
+
+      - uses: bbrain-io/actions.get_latest@dev
+        id: remote
+        with:
+          owner: ${{ env.REMOTE_OWNER }}
+          repo: ${{ env.REMOTE_REPO }}
+          by_date: true
+
+      - uses: bbrain-io/actions.get_latest@dev
+        id: local
+        with:
+          owner: ${{ github.repository_owner }}
+          repo: ${{ github.event.repository.name }}
+          by_date: false
+
+  notify:
+    runs-on: ubuntu-latest
+    needs: versions
+    if: needs.versions.outputs.remote_clean != needs.versions.outputs.local_clean
+    steps:
+      - name: Notify new version
+        run: exit 1

@@ -1,0 +1,2 @@
+# PKGBUILD for alacritty
+
