@@ -13,10 +13,11 @@ name: Build PKGBUILD
 jobs:
   check_tag:
     runs-on: ubuntu-latest
-    if: startsWith(github.ref, 'refs/tags/')
     steps:
       - uses: actions/checkout@v3
+        if: startsWith(github.ref, 'refs/tags/')
       - name: PKGBUILD version matches release tag
+        if: startsWith(github.ref, 'refs/tags/')
         run: |
           rc=0
           tag="${{ github.ref }}"
