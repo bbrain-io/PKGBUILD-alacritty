@@ -41,6 +41,10 @@ jobs:
       image: joscherrer/actions-images:makedeb
       options: --user root
     steps:
+      - name: test
+        run: |
+          ls -lRa /__w
+          echo "$USER"
       - uses: actions/checkout@v3
       - name: Build PKGBUILD
         run: sudo -E -u makedeb bash -c 'makedeb -s --no-confirm'
