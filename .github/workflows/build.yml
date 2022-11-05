@@ -40,7 +40,13 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: Install makedeb
-        run: bash -ci "$(wget -qO - 'https://shlink.makedeb.org/install')"
+        run: |
+          sudo apt update
+          sudo apt install -y wget gpg
+          wget -qO - 'https://proget.makedeb.org/debian-feeds/makedeb.pub' | gpg --dearmor | sudo tee /usr/share/keyrings/makedeb-archive-keyring.gpg 1> /dev/null
+          echo 'deb [signed-by=/usr/share/keyrings/makedeb-archive-keyring.gpg arch=all] https://proget.makedeb.org/ makedeb main' | sudo tee /etc/apt/sources.list.d/makedeb.list
+          sudo apt update
+          sudo apt install -y makedeb
       - name: Build PKGBUILD
         run: makedeb -s --no-confirm
       - name: Create release
