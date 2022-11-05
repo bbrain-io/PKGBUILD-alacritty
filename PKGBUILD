@@ -40,7 +40,6 @@ check() {
 }
 
 package() {
-    [ -z "${pkgname}" ] && exit 1
     cd "${pkgname}/" || exit 1
 
     cat <<'EOF' >>alacritty.sh
