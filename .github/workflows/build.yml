@@ -22,6 +22,7 @@ jobs:
           rc=0
           tag="${{ github.ref }}"
           ver="${tag%%-*}"
+          ver="${ver##v}"
           rel="${tag##*-}"
           grep "^pkgver=$ver$" PKGBUILD || {
             echo "pkgver not matching tag";
