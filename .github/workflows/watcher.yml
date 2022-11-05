@@ -1,6 +1,7 @@
 on:
   schedule:
     - cron: "0 14 * * 6"
+  workflow_dispatch:
 
 env:
   REMOTE_OWNER: alacritty
