@@ -53,8 +53,12 @@ jobs:
       - name: Run makedeb lint
         run: makedeb --lint
 
+      - name: Update apt cache
+        run: sudo apt update
+
       - name: Build PKGBUILD
         run: makedeb -s --no-confirm
+
       - name: Create release
         uses: softprops/action-gh-release@v1
         if: startsWith(github.ref, 'refs/tags/')
