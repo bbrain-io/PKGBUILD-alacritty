@@ -1,9 +1,13 @@
 on:
   push:
+    branches:
+      - 'master'
+      - 'v*'
     paths:
       - 'PKGBUILD'
     tags:
       - 'v*'
+  workflow_dispatch:
 
 name: Build PKGBUILD
 jobs:
