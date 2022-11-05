@@ -4,7 +4,7 @@
 
 pkgname=alacritty
 pkgver=0.11.0
-pkgrel=1
+pkgrel=2
 pkgdesc='A cross-platform, OpenGL terminal emulator.'
 arch=('amd64')
 depends=('libc6')
