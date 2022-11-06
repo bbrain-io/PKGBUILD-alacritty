@@ -1,0 +1,25 @@
+on:
+  release:
+    types:
+      - "published"
+  workflow_dispatch:
+
+name: Publish to aptly
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: bbrain-io/actions.publish-aptly@master
+        with:
+          repo: ${{ github.repository_owner }}
+          owner: ${{ github.event.repository.name }}
+          aptly-auth: basic
+          aptly-url: ${{ env.APTLY_URL }}
+          aptly-user: ${{ env.APTLY_USER }}
+          aptly-pass: ${{ env.APTLY_PASS }}
+          aptly-dir: tmp
+          aptly-repo: pkger
+          aptly-dist: jammy
+          release-tag: ${{ github.event.release.tag_name }}
+          assets: |
+            *.deb
